@@ -1,0 +1,144 @@
+<!-- /* background: #262626; */ -->
+<!-- color: #ffffff; -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navbar</title>
+
+
+  <style>
+
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: content-box;
+    }
+    .navbar{
+      width: 100%;
+      height: 80px;
+      background-color: #262626;
+      color: white;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      transition: 0.8s ease-in-out;
+    }
+    .nav-brand{
+      font-size: 30px;
+      text-decoration: none;
+      color: #ffffff;
+    }
+    .navbar ul{
+      display: flex;
+    }
+
+    .navbar ul li{
+      list-style: none;
+    }
+    .navbar ul li a{
+      font-size: 20px;
+      padding-left: 20px;
+      text-decoration: none;
+      color: #ffffff;
+      transition: 0.9s ease-in-out;
+    }
+    .nav-link:hover {
+      color: cyan;
+    }
+    .nav-brand:hover{
+      transition: 0.9s ease-in-out;
+      transform: rotate(360deg);
+      color: red;
+    }
+
+    .hamburger{
+      cursor: pointer;
+      display: none;
+    }
+    .bar{
+      display: block;
+      width: 20px;
+      height: 3px;
+      margin: 5px auto;
+      -webkit-transition: all 0.3s ease-in-out;
+      transition: all 0.3s ease-in-out;
+      background-color: #ffffff;
+    }
+
+
+
+    @media only screen and (max-width: 767px){
+    .hamburger{
+        display: block;
+    }
+    .hamburger.active .bar:nth-child(2){
+      opacity: 0;
+    }
+    .hamburger.active .bar:nth-child(1){
+      transform: translateY(8px) rotate(45deg);
+    }
+    .hamburger.active .bar:nth-child(3){
+      transform: translateY(-8px) rotate(-45deg);
+    }
+    .nav-menu{
+      position: fixed;
+      left: -100%;
+      top: 80px;
+      gap: 0;
+      flex-direction: column;
+      background-color: #262626;
+      width: 100%;
+      text-align: center;
+      transition: 0.3s;
+    }
+    .nav-item{
+      margin: 16px 0;
+    }
+    .nav-menu.active{
+      left: 0;
+    }
+  }
+
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <a href="#" class="nav-brand">DEV.</a>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">Services</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">Portfolio</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </nav>
+  </header>
+
+
+
+  <script>
+    const hamburger = document.querySelector(".hamburger");
+    const navMenu = document.querySelector(".nav-menu");
+
+    hamburger.addEventListener("click", () => {
+      hamburger.classList.toggle("active");
+      navMenu.classList.toggle("active");
+    });
+
+
+    document.querySelectorAll(".nav-link").forEach(n => n.addEventListener("click",()=>{
+      hamburger.classList.remove("active");
+      navMenu.classList.remove("active");
+    }))
+  </script>
+</body>
+</html>
