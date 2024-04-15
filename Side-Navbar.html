@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Side Navbar - Tivotal</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  --color-hover: rgba(32, 59, 232);
+  --transition: all 0.2s ease;
+}
+
+:root {
+  --color-white: #fff;
+  --color-black: #000;
+  --color-bg: #e2e2e2;
+}
+
+.dark-mode {
+  --color-white: #000;
+  --color-black: #fff;
+  --color-bg: #1d1b31;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 78px;
+  height: 100vh;
+  background: var(--color-white);
+  padding: 8px 16px;
+  transition: var(--transition);
+}
+
+.sidebar.expand {
+  width: 250px;
+  transition: var(--transition);
+}
+
+.nav-header {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.nav-header .logo {
+  color: var(--color-black);
+  font-size: 23px;
+  font-weight: 600;
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.sidebar.expand .nav-header .logo {
+  opacity: 1;
+  transition: var(--transition);
+}
+
+.nav-header .btn-menu {
+  position: absolute;
+  color: var(--color-black);
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  font-size: 23px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.sidebar.expand .nav-header .btn-menu {
+  margin-right: 0;
+}
+
+.nav-links {
+  margin-top: 20px;
+  height: 100%;
+}
+
+.nav-links li {
+  position: relative;
+  margin: 8px 0;
+  list-style: none;
+}
+
+.nav-links i {
+  color: var(--color-black);
+  height: 50px;
+  min-width: 50px;
+  font-size: 23px;
+  text-align: center;
+  line-height: 50px;
+}
+
+.nav-links input {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-black);
+  outline: none;
+  height: 40px;
+  width: 50%;
+  border: none;
+  border-radius: 12px;
+  background: var(--color-bg);
+  padding: 0;
+}
+
+.sidebar.expand .nav-links input {
+  width: 100%;
+  padding: 0 20px 0 40px;
+}
+
+.nav-links li a {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  border-radius: 12px;
+  align-items: center;
+  text-decoration: none;
+  background: var(--color-white);
+}
+
+.nav-links li:hover a {
+  background: var(--color-hover);
+}
+
+.nav-links li:hover i {
+  color: var(--color-white);
+}
+
+.nav-links li a .title {
+  color: var(--color-black);
+  font-size: 15px;
+  font-weight: 400;
+  white-space: nowrap;
+  display: none;
+  transition: var(--transition);
+}
+
+.sidebar.expand .nav-links li a .title {
+  display: block;
+  transition: var(--transition);
+}
+
+.nav-links li:hover a .title {
+  color: var(--color-white);
+}
+
+.nav-links li .tooltip {
+  position: absolute;
+  top: -20px;
+  left: calc(100% + 15px);
+  z-index: 3;
+  background: var(--color-white);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  padding: 6px 14px;
+  color: var(--color-black);
+  font-size: 15px;
+  white-space: nowrap;
+  border-radius: 3px;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0s;
+}
+
+.sidebar li:hover .tooltip {
+  opacity: 1;
+  pointer-events: auto;
+  transition: var(--transition);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.sidebar.expand .tooltip {
+  display: none;
+}
+
+.nav-links .search-btn {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-25px);
+  font-size: 23px;
+  color: var(--color-black);
+  border-radius: 12px;
+  background: var(--color-white);
+  transition: var(--transition);
+}
+
+.sidebar.expand .nav-links .search-btn {
+  background: transparent;
+  transition: var(--transition);
+}
+
+.sidebar.expand .nav-links li:hover .search-btn {
+  color: var(--color-black);
+}
+
+.nav-links .search-btn:hover {
+  background: var(--color-hover);
+}
+
+.theme-wrapper {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+  width: 250px;
+  left: 0;
+  padding: 8px 16px;
+}
+
+.theme-wrapper .theme-icon {
+  font-size: 20px;
+  color: var(--color-black);
+  display: none;
+  transition: var(--transition);
+}
+.sidebar.expand .theme-wrapper .theme-icon {
+  display: block;
+}
+
+.theme-wrapper p {
+  font-size: 16px;
+  color: var(--color-black);
+  font-weight: 400;
+  display: none;
+  transition: var(--transition);
+}
+
+.sidebar.expand .theme-wrapper p {
+  display: block;
+}
+
+.theme-wrapper .theme-btn {
+  width: 40px;
+  height: 20px;
+  background: var(--color-bg);
+  border-radius: 30px;
+  position: relative;
+  cursor: pointer;
+}
+
+.theme-wrapper .theme-btn .theme-ball {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background: var(--color-black);
+  border-radius: 50%;
+  top: 2px;
+  left: 3px;
+  transition: var(--transition);
+}
+
+.theme-wrapper .theme-btn .theme-ball.dark {
+  left: 20px;
+}
+
+.home {
+  position: relative;
+  top: 0;
+  left: 78px;
+  width: calc(100% - 78px);
+  min-height: 100vh;
+  background: var(--color-bg);
+  z-index: 6;
+  transition: var(--transition);
+}
+
+.sidebar.expand ~ .home {
+  left: 250px;
+  width: calc(100% - 250px);
+  transition: var(--transition);
+}
+
+.home p {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--color-black);
+  display: inline-block;
+  margin: 20px;
+  white-space: nowrap;
+}
+    </style>
+
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <section class="sidebar">
+      <!-- Start Sidebar -->
+      <div class="nav-header">
+        <p class="logo">Dashboard</p>
+        <i class="bx bx-menu btn-menu"></i>
+      </div>
+      <ul class="nav-links">
+        <li>
+          <i class="bx bx-search search-btn"></i>
+          <input type="text" placeholder="search..." />
+          <span class="tooltip">Search</span>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-home-alt-2"></i>
+            <span class="title">Home</span>
+          </a>
+          <span class="tooltip">Home</span>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-phone-call"></i>
+            <span class="title">Calls</span>
+          </a>
+          <span class="tooltip">Calls</span>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-bookmark"></i>
+            <span class="title">Bookmarks</span>
+          </a>
+          <span class="tooltip">Bookmarks</span>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-wallet-alt"></i>
+            <span class="title">Wallet</span>
+          </a>
+          <span class="tooltip">Wallet</span>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bxs-devices"></i>
+            <span class="title">Devices</span>
+          </a>
+          <span class="tooltip">Devices</span>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-cog"></i>
+            <span class="title">Setting</span>
+          </a>
+          <span class="tooltip">Setting</span>
+        </li>
+      </ul>
+      <div class="theme-wrapper">
+        <i class="bx bxs-moon theme-icon"></i>
+        <p>Dark Theme</p>
+        <div class="theme-btn">
+          <span class="theme-ball"></span>
+        </div>
+      </div>
+    </section>
+    <!-- End Sidebar -->
+    <section class="home">
+      <!-- Start Home -->
+      <p>Home Content Here</p>
+    </section>
+    <!-- End Home -->
+    <script>
+
+const btn_menu = document.querySelector(".btn-menu");
+const side_bar = document.querySelector(".sidebar");
+
+btn_menu.addEventListener("click", function () {
+  side_bar.classList.toggle("expand");
+  changebtn();
+});
+
+function changebtn() {
+  if (side_bar.classList.contains("expand")) {
+    btn_menu.classList.replace("bx-menu", "bx-menu-alt-right");
+  } else {
+    btn_menu.classList.replace("bx-menu-alt-right", "bx-menu");
+  }
+}
+
+const btn_theme = document.querySelector(".theme-btn");
+const theme_ball = document.querySelector(".theme-ball");
+
+const localData = localStorage.getItem("theme");
+
+if (localData == null) {
+  localStorage.setItem("theme", "light");
+}
+
+if (localData == "dark") {
+  document.body.classList.add("dark-mode");
+  theme_ball.classList.add("dark");
+} else if (localData == "light") {
+  document.body.classList.remove("dark-mode");
+  theme_ball.classList.remove("dark");
+}
+
+btn_theme.addEventListener("click", function () {
+  document.body.classList.toggle("dark-mode");
+  theme_ball.classList.toggle("dark");
+  if (document.body.classList.contains("dark-mode")) {
+    localStorage.setItem("theme", "dark");
+  } else {
+    localStorage.setItem("theme", "light");
+  }
+});
+
+
+
+    </script>
+  </body>
+</html>
